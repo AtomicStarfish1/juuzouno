@@ -1973,3 +1973,27 @@ datum
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 
+		harmful/catechol
+			name = "catechol"
+			id = "catechol"
+			description = "Catechols are a group of organic compounds ranging from dopamine to adrenaline. This one however has unique effects. Has nothing to do with cats!"
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_b = 175
+			fluid_g = 200
+			depletion_rate = 0.4
+			transparency = 20
+			penetrates_skin = 1
+			touch_modifier = 0.25
+
+			value = 4 // 1 1 1 heat
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if(holder.has_reagent("epinephrine"))
+					holder.remove_reagent("epinephrine", 1 * mult)
+				if (prob(25))
+					M.reagents.add_reagent("histamine", 2 * mult)
+					M.reagents.add_reagent("sugar", 3 * mult)
+				..()
+				return

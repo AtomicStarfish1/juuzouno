@@ -1981,7 +1981,7 @@ datum
 			fluid_r = 200
 			fluid_b = 175
 			fluid_g = 200
-			depletion_rate = 0.4
+			depletion_rate = 0.3
 			transparency = 20
 			penetrates_skin = 1
 			touch_modifier = 0.25
@@ -1991,9 +1991,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if(holder.has_reagent("epinephrine"))
-					holder.remove_reagent("epinephrine", 1 * mult)
+					holder.remove_reagent("epinephrine", 2 * mult)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", 2 * mult)
-					M.reagents.add_reagent("sugar", 3 * mult)
+					M.reagents.add_reagent("histamine", 8 * mult)
+					M.reagents.add_reagent("sugar", 15 * mult)
 				..()
 				return

@@ -618,7 +618,8 @@ datum
 							
 					if (prob(0.25))
 						if (ishuman(M))
-							M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1)
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1)
 						
 				return
 

@@ -548,6 +548,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			stun_resist = 6
+			target_organs = list("left_kidney", "right_kidney", "brain", "left_eye", "right_eye")
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
@@ -601,12 +602,24 @@ datum
 				else
 					if (!M.getStatusDuration("paralysis"))
 						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
+						M.change_eye_blurry(5, 5)
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
 						M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
 
 					if (prob(8))
-						M.take_toxin_damage(severity * mult)
+						M.emote("gasp")
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+						else
+							M.take_toxin_damage(severity * mult)
+							
+					if (prob(0.25))
+						if (ishuman(M))
+							M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1)
+						
 				return
 
 		//WHY IS SWEET ***TEA*** A SUBTYPE OF SUGAR?!?!?!?!
